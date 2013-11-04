@@ -1,0 +1,10 @@
+name:            concurrent-agda-ffi
+version:         0.0.0
+cabal-version:   >= 1.8
+build-type:      Simple
+description:     Auxiliary Haskell code used by Concurrent Agda lib.
+
+library
+  build-depends:    base >= 3.0.3.1 && < 4.7,
+                    synchronous-channels == 0.1
+  exposed-modules:  Control.Concurrent.FFI
