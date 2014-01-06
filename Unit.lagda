@@ -1,4 +1,5 @@
 TODO. Modify stdlib's Foreign.Haskell instead?
+TODO. Do I still need the universe polymorphic version?
 
 \begin{code}
 module Unit where
@@ -11,7 +12,7 @@ data Unit l : Set l where tt : Unit l
 ⟨⟩ : <>
 ⟨⟩ = tt
 
-{-# IMPORT Control.Concurrent.FFI #-}
+{-# IMPORT Control.Concurrent.FFI                         #-}
 {-# COMPILED_DATA Unit Control.Concurrent.FFI.AgdaUnit () #-}
 \end{code}
 

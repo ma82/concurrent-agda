@@ -1,0 +1,27 @@
+#+TITLE: Experimental Concurrent Haskell bindings for Agda
+
+* Description
+
+This is a *very* incomplete selection of concurrency primitives.
+
+* Installing the auxiliary Haskell package
+
+: $ cd ffi
+: $ cabal install
+
+* Compiling and executing "tests"
+
+- Set =AGDA_STDLIB_PATH= accordingly.
+
+- Uncomment =main= in the relevant file.
+
+- Run
+
+: $ agda -c --ghc-flag="-threaded" --ghc-flag="-package concurrent-agda-ffi" -i "$AGDA_STDLIB_PATH" -i "." Control/Concurrent/Chan.lagda
+: $ ./Chan
+
+or
+
+: $ agda -c --ghc-flag="-threaded" --ghc-flag="-package concurrent-agda-ffi" -i "$AGDA_STDLIB_PATH" -i "." Control/Concurrent/Chan/Synchronous.lagda
+: $ ./Synchronous
+

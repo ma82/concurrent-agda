@@ -20,6 +20,8 @@ postulate
 {-# COMPILED writeChan (\ _ _ -> Control.Concurrent.Chan.writeChan) #-}
 \end{code}
 
+Ping-pong example.
+
 \begin{code}
 private
   open import Data.String
@@ -42,6 +44,7 @@ private
   ping pong : Chan Costring → IO <>
   ping = proc ">"
   pong = proc "<"
+\end{code}
 
 {-# NO_TERMINATION_CHECK #-}
 main : IO <>
@@ -49,4 +52,3 @@ main = newChan {A = Costring}  >>= λ c →
        forkIO (ping c)         >> 
        writeChan c [ "start" ] >>
        pong c       
-\end{code}

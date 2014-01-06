@@ -11,14 +11,20 @@ postulate Chan : ∀ {l} → Set l → Set l
 
 postulate
   newChan   : ∀ {l}{A : Set l} → IO (Chan A)
-  writeChan : ∀ {l}{A : Set l} → Chan A → A → IO (Unit l)
+  writeChan : ∀ {l}{A : Set l} → Chan A → A → IO <>
   readChan  : ∀ {l}{A : Set l} → Chan A → IO A
+  move      : ∀ {l}{A : Set l} → Chan A → Chan A → IO A
+  fuse      : ∀ {l}{A : Set l} → Chan A → Chan A → IO <>
 
 {-# IMPORT Control.Concurrent.Chan.Synchronous                                  #-}
 {-# COMPILED newChan   (\ _ _ -> Control.Concurrent.Chan.Synchronous.newChan  ) #-}
 {-# COMPILED readChan  (\ _ _ -> Control.Concurrent.Chan.Synchronous.readChan ) #-}
 {-# COMPILED writeChan (\ _ _ -> Control.Concurrent.Chan.Synchronous.writeChan) #-}
+{-# COMPILED move      (\ _ _ -> Control.Concurrent.FFI.move                  ) #-}
+{-# COMPILED fuse      (\ _ _ -> Control.Concurrent.FFI.fuse                  ) #-}
 \end{code}
+
+Ping-pong example.
 
 \begin{code}
 private
@@ -42,6 +48,7 @@ private
   ping pong : Chan Costring → IO <>
   ping = proc ">"
   pong = proc "<"
+\end{code}
 
 {-# NO_TERMINATION_CHECK #-}
 main : IO <>
@@ -49,4 +56,3 @@ main = newChan {A = Costring}  >>= λ c →
        forkIO (ping c)         >> 
        writeChan c [ "start" ] >>
        pong c       
-\end{code}
