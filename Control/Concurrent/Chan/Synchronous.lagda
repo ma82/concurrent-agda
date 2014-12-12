@@ -37,7 +37,7 @@ private
   _>>_ : ∀ {lA lB}{A : Set lA}{B : Set lB} → IO A → IO B → IO B
   m >> n = m >>= λ _ → n
 
-  {-# NO_TERMINATION_CHECK #-}
+  {-# NON_TERMINATING #-}
   proc : String → Chan Costring → IO <>
   proc s c = readChan c        >>= λ m →
              putStr [ "Got " ] >>
@@ -50,7 +50,7 @@ private
   pong = proc "<"
 \end{code}
 
-{-# NO_TERMINATION_CHECK #-}
+{-# NON_TERMINATING #-}
 main : IO <>
 main = newChan {A = Costring}  >>= λ c →
        forkIO (ping c)         >> 
